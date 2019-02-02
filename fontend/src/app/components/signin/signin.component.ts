@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { JaewisService } from '../../Services/jaewis.service';
 
 
 @Component({
@@ -9,14 +10,16 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private http:HttpClient) { }
+  constructor( private Jarwis:JaewisService ) {
+
+  }
 
   ngOnInit() {
   }
 
   public form = {
-    email: null,
     name: null,
+    email: null,
     password: null,
     password_confirmation: null
   };
@@ -24,13 +27,15 @@ export class SigninComponent implements OnInit {
   public error = [];
 
   onSubmit() {
-    this.http.post("http://localhost:8000/api/signup", this.form).subscribe(
+    console.log(this.form);
+    this.Jarwis.signup(this.form).subscribe(
       data=> console.log(data),
       error=> this.handleError(error)
     );
   }
 
   handleError(error) {
+    console.log(error);
     this.error = error.error.errors;
   }
 

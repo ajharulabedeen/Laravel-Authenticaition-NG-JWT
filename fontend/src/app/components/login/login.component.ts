@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient }from '@angular/common/http';
+import { JaewisService } from '../../Services/jaewis.service';
 
 @Component({
   selector: 'app-login',
@@ -20,15 +20,13 @@ export class LoginComponent implements OnInit {
 
   public error = null;
 
-  constructor( private http:HttpClient ) {
+  constructor( private Jarwis:JaewisService ) {
 
    }
 
 
   onSubmit() {
-
-    console.log(this.form);
-    this.http.post("http://localhost:8000/api/login", this.form).subscribe(
+    this.Jarwis.login(this.form).subscribe(
       data=> console.log(data),
       error=> this.handleError(error)
     );
