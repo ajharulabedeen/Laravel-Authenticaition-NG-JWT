@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { JaewisService } from '../../Services/jaewis.service';
+import { Router } from '@angular/router';
+import { TokenService } from 'src/app/Services/token.service';
 
 
 @Component({
@@ -10,7 +11,10 @@ import { JaewisService } from '../../Services/jaewis.service';
 })
 export class SigninComponent implements OnInit {
 
-  constructor( private Jarwis:JaewisService ) {
+  constructor( 
+    private Jarwis:JaewisService,
+    private Token: TokenService,
+    private router: Router ) {
 
   }
 
@@ -29,7 +33,7 @@ export class SigninComponent implements OnInit {
   onSubmit() {
     console.log(this.form);
     this.Jarwis.signup(this.form).subscribe(
-      data=> console.log(data),
+      data => this.handleResponse(data),
       error=> this.handleError(error)
     );
   }
@@ -37,6 +41,11 @@ export class SigninComponent implements OnInit {
   handleError(error) {
     console.log(error);
     this.error = error.error.errors;
+  }
+
+  handleResponse(data) {
+    this.Token.handle(data.access_token);
+    this.router.navigateByUrl('/profile');
   }
 
 

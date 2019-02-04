@@ -16,7 +16,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','signup']]);
+        // $this->middleware('auth:api', ['except' => ['login','signup']]);
     }
 
     /**
@@ -26,6 +26,7 @@ class AuthController extends Controller
      */
     public function login()
     {
+        error_log("Log In");
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
@@ -37,6 +38,7 @@ class AuthController extends Controller
 
     public function signup(SignUpRequest $request)
     {
+        error_log("SignUpRequest");
         User::create($request->all());
         return $this->login($request);
     }
@@ -59,6 +61,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        error_log("Log out");
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
@@ -90,4 +93,4 @@ class AuthController extends Controller
             'user' => auth()->user()->name
         ]);
     }
-}
+}//class
