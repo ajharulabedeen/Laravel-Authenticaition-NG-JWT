@@ -6,5 +6,8 @@ use Illuminate\Http\Request;
 
 class Test extends Controller
 {
-
+    public function t()
+    {
+        return "Alhumdulilah...!";
+    } 
 }
